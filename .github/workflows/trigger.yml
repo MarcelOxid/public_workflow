@@ -13,5 +13,5 @@ jobs:
           curl -X POST https://api.github.com/repos/MarcelOxid/private_workflow/.github/workflows/development.yml/dispatches \
           -H "Authorization: Bearer ${{secrets.ACTIONS_KEY}}" \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -d '{"ref": "master"}'
+          -d '{"ref": "main"}'
       - uses: actions/checkout@v3
