@@ -1,21 +1,6 @@
 name: workflow_01
 on:
   workflow_dispatch:
-    inputs:
-      workflow_02:
-        description: 'ًWorkflow 2 which will be triggered'
-        required: true
-        default: 'workflow_02'
-
-      workflow2_github_account:
-        description: 'GitHub Account Owner'
-        required: true
-        default: 'MarcelOxid'
-
-      workflow2_repo_github:
-        description: 'repo-name'
-        required: true
-        default: ':repoName'
 
 jobs:
   build:
@@ -24,4 +9,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Test
-        uses: MarcelOxid/private_workflow@main
+        run: |
+          curl -X POST https://api.github.com/repos/MarcelOxid/private_workflow/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u MarcelOxid:${{ secrets.ACTIONS_KEY }} \
+          --data '{"event_type": "Trigger Workflow", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+      - uses: actions/checkout@v3
