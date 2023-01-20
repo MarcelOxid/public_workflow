@@ -5,13 +5,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions: {}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Test
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_KEY }}
         run: |
-          curl -X POST https://api.github.com/repos/MarcelOxid/private_workflow/.github/workflows/development.yml/dispatches \
-          -H "Authorization: Bearer ${{secrets.ACTIONS_KEY}}" \
+          curl
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -d '{"ref": "main"}'
-      - uses: actions/checkout@v3
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/MarcelOxid/private_workflow/.github/workflows/development.yml/dispatches
